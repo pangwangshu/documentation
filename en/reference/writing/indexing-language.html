@@ -261,7 +261,9 @@ The supported arithmetic operators are:
   <td>String</td>
   <td>int or long</td>
   <td><p id="hash">Converts the input to a hash value (using SipHash).
-      The hash will be int or long depending on the target field.</p></td>
+      The hash will be int or long depending on the target field.
+      Use <a href="#arithmetics">arithmetics</a> and <a href="#abs">abs</a> to map it to a range,
+      e.g. <code>hash | _ % 1000 | abs</code>.</p></td>
 </tr>
 <tr>
     <td><code>pack_bits</code></td>
@@ -454,6 +456,15 @@ The following are the unclassified expressions available:
       Returns the current execution value.
       This is useful, e.g., to prepend some other value to the current execution value,
       see <a href="/en/writing/indexing.html#execution-value-example">this example</a>.
+    </p></td>
+  </tr>
+  <tr>
+    <td><code>abs</code></td>
+    <td><p id="abs">
+      Sets the execution value to the absolute value of the numeric execution value, keeping its type.
+      As in Java, the absolute value of the most negative byte, int or long is that value itself,
+      so take the remainder before the absolute value when computing buckets:
+      <code>input id | hash | _ % 1000 | abs | attribute bucket</code> gives values in [0, 999].
     </p></td>
   </tr>
   <tr>
